@@ -28,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.nak.learningandroid.repositoryimpl.LoginRepositoryImpl
 import com.nak.learningandroid.ui.theme.LearningAndroidTheme
+import com.nak.learningandroid.viewmodel.LoginViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -36,16 +38,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val repository = LoginRepositoryImpl()
+            val viewModel = LoginViewModel(repository)
             LearningAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Calculator(
-                        modifier = Modifier.padding(innerPadding)
+                    LoginForm(
+                        modifier = Modifier.padding(innerPadding),
+                        viewModel = viewModel
                     )
                 }
             }
         }
     }
 }
+
 
 //Box, Column, Row, Card
 
