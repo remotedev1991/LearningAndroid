@@ -19,8 +19,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -419,16 +423,32 @@ fun VibeChatBottomNavigation(modifier: Modifier = Modifier) {
                 selected = index == selectedIndex,
                 onClick = { },
                 icon = {
-                    // Reusing simple shapes instead of actual icons for now
+                    val iconImage = when (label) {
+                        "Chats" -> Icons.Filled.Chat
+                        "Groups" -> Icons.Filled.Group
+                        "Discover" -> Icons.Filled.Explore
+                        else -> Icons.Filled.Settings
+                    }
+
+                    val isSelected = index == selectedIndex
+
                     Box(
                         modifier = Modifier
-                            .size(20.dp)
+                            .size(32.dp)
                             .clip(CircleShape)
                             .background(
-                                if (index == selectedIndex) Color(0xFF00E4FF)
-                                else Color(0xFF2A3C4B)
-                            )
-                    )
+                                if (isSelected) Color(0xFF00E4FF)
+                                else Color.Transparent
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = iconImage,
+                            contentDescription = label,
+                            tint = if (isSelected) Color(0xFF02131C) else Color(0xFF8BA2B4),
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                 },
                 label = {
                     Text(
@@ -438,7 +458,7 @@ fun VibeChatBottomNavigation(modifier: Modifier = Modifier) {
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color(0xFF02131C),
-                    selectedTextColor = Color.White,
+                    selectedTextColor = Color(0xFF00E4FF),
                     unselectedIconColor = Color(0xFF8BA2B4),
                     unselectedTextColor = Color(0xFF8BA2B4),
                     indicatorColor = Color.Transparent
